@@ -74,6 +74,11 @@ class Character{
         // attack each other
         void attack(Character& target)
         {
+            if (!isAlive() || !target.isAlive())
+            {
+                return;
+            }
+            // both char alive so ATTTACKKKKK
             target.takeDamage(attackPower);
         }
 
@@ -85,13 +90,37 @@ class Character{
 
 };
 
+class Warrior : public Character
+{
+     public:
+     // pass the starting stats to the Char constructor
+     Warrior(std::string charName, int startingHealth, int startingAttack) : Character(charName, startingHealth, startingAttack)
+     {
+        
+     }
+};
+
 int main()
 {
     // objects
-    Character zoro("Zoro", 100, 20);
-    Character mihawk("Mihawk", 150, 30);
-    zoro.attack(mihawk);
-    mihawk.attack(zoro);
+    Warrior zoro("Zoro", 100, 20);
+    Warrior mihawk("Mihawk", 150, 30);
+
+    // loop for the attack turn
+    while (zoro.isAlive() && mihawk.isAlive())
+    {
+        zoro.attack(mihawk);
+        mihawk.attack(zoro);
+    }
+    if (zoro.isAlive())
+    {
+        std::cout << zoro.getName() << " wins!" << std::endl;
+    }
+    else
+    {
+         std::cout << mihawk.getName() << " wins!" << std::endl;
+    }
+    
     // zoro
     std::cout << zoro.getName() << std::endl;
      
